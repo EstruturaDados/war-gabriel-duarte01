@@ -1,56 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+        
 // ============================================================================
-//         PROJETO WAR ESTRUTURADO - DESAFIO DE CÓDIGO
-// ============================================================================
-//        
-// ============================================================================
-//
-// OBJETIVOS:
-// - Modularizar completamente o código em funções especializadas.
-// - Implementar um sistema de missões para um jogador.
-// - Criar uma função para verificar se a missão foi cumprida.
-// - Utilizar passagem por referência (ponteiros) para modificar dados e
-//   passagem por valor/referência constante (const) para apenas ler.
-// - Foco em: Design de software, modularização, const correctness, lógica de jogo.
-//
-// ============================================================================
+//constante global
+#define tam_max 50
 
-// Inclusão das bibliotecas padrão necessárias para entrada/saída, alocação de memória, manipulação de strings e tempo.
+struct territorio{
+    char continente[tam_max];
+    char cor[tam_max];
+    int tropa;
+};
 
-// --- Constantes Globais ---
-// Definem valores fixos para o número de territórios, missões e tamanho máximo de strings, facilitando a manutenção.
+void limparBufferEntrada(){
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF); 
+}
 
-// --- Estrutura de Dados ---
-// Define a estrutura para um território, contendo seu nome, a cor do exército que o domina e o número de tropas.
-
-// --- Protótipos das Funções ---
-// Declarações antecipadas de todas as funções que serão usadas no programa, organizadas por categoria.
-// Funções de setup e gerenciamento de memória:
-// Funções de interface com o usuário:
-// Funções de lógica principal do jogo:
-// Função utilitária:
-
-// --- Função Principal (main) ---
-// Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
 int main() {
-    // 1. Configuração Inicial (Setup):
-    // - Define o locale para português.
-    // - Inicializa a semente para geração de números aleatórios com base no tempo atual.
-    // - Aloca a memória para o mapa do mundo e verifica se a alocação foi bem-sucedida.
-    // - Preenche os territórios com seus dados iniciais (tropas, donos, etc.).
-    // - Define a cor do jogador e sorteia sua missão secreta.
+    
+printf("============================================================================\n");
+printf("PROJETO WAR ESTRUTURADO - DESAFIO DE CÓDIGO \n");
+printf("============================================================================\n");
 
-    // 2. Laço Principal do Jogo (Game Loop):
-    // - Roda em um loop 'do-while' que continua até o jogador sair (opção 0) ou vencer.
-    // - A cada iteração, exibe o mapa, a missão e o menu de ações.
-    // - Lê a escolha do jogador e usa um 'switch' para chamar a função apropriada:
-    //   - Opção 1: Inicia a fase de ataque.
-    //   - Opção 2: Verifica se a condição de vitória foi alcançada e informa o jogador.
-    //   - Opção 0: Encerra o jogo.
-    // - Pausa a execução para que o jogador possa ler os resultados antes da próxima rodada.
+    struct territorio mundo[4];
+    int totalContinente = 0;
+    int opcao;
 
-    // 3. Limpeza:
-    // - Ao final do jogo, libera a memória alocada para o mapa para evitar vazamentos de memória.
+    //laço principal
+    do{
 
+    printf("Para começar o jogo, é necessário cadastrar os territórios\n");
+    printf("Para tanto, escolha a opção desejada:\n");
+    printf("1 - cadastrar território\n");
+    printf("2 - visualizar os territórios\n");
+    printf("0 - sair do jogo...\n");
+
+    scanf("%d", &opcao);
+    limparBufferEntrada();
+
+    switch (opcao){
+
+
+        case 1: //cadastro de novos continente
+    
+        if(totalContinente < 4){
+
+        printf("Qual o seu continente? \n");
+        fgets (mundo[totalContinente].continente, tam_max, stdin);
+    
+        printf("Qual a cor dele?\n");
+        fgets(mundo[totalContinente].cor, tam_max, stdin);
+
+        mundo[totalContinente].continente[strcspn(mundo[totalContinente].continente, "\n")] = '\0';
+        mundo[totalContinente].cor[strcspn(mundo[totalContinente].cor, "\n")] = '\0';
+
+        printf("Quantas tropas ele possui?\n");
+        scanf("%d", &mundo[totalContinente].tropa);
+        limparBufferEntrada();
+
+        printf("Cadastro realizado com sucesso!\n");
+
+        totalContinente++;
+    
+}       else{
+   
+        printf("Foi atingido o total de territorios cadastrados");
+
+}
+    
+    printf("Pressione enter para prosseguir...\n");
+    getchar();
+    break;
+
+        case 2: //mostra os territorios
+    
+        for(int c = 0; c < totalContinente; c++){
+            printf("====================\n");
+            printf("território %d: %s\n", c + 1, mundo[c].continente);
+            printf("cor: %s\n", mundo[c].cor);
+            printf("tropa: %d\n", mundo[c].tropa);
+
+        }
+
+}
+    }while(opcao != 0);
+
+        
     return 0;
 }
 
