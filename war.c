@@ -5,90 +5,65 @@
 // ============================================================================
 //constante global
 #define tam_max 50
+#define mundo_max 5
 
 struct territorio{
     char continente[tam_max];
     char cor[tam_max];
     int tropa;
-};
+};  
 
 void limparBufferEntrada(){
+    
     int c;
-    while ((c = getchar()) != '\n' && c != EOF); 
+    while((c = gertchar()) != '\n' && c != EOF);
+
 }
 
-int main() {
-    
-printf("============================================================================\n");
-printf("PROJETO WAR ESTRUTURADO - DESAFIO DE CÓDIGO \n");
-printf("============================================================================\n");
+int main(){
 
-    struct territorio mundo[4];
+    struct territorio mundo[mundo_max];
     int totalContinente = 0;
-    int opcao;
+    int i;
 
-    //laço principal
-    do{
+    //Laço do cadastro dos continentes
+    for(int i = 0; i < 4; i++){
+        
+        printf("Qual o continente?\n");
+        fgets(mundo[i].continente, tam_max, stdin);
+        
+        printf("Qual a cor?\n");
+        fgets(mundo[i].cor, tam_max, stdin);
 
-    printf("Para começar o jogo, é necessário cadastrar os territórios\n");
-    printf("Para tanto, escolha a opção desejada:\n");
-    printf("1 - cadastrar território\n");
-    printf("2 - visualizar os territórios\n");
-    printf("0 - sair do jogo...\n");
+        mundo[i].continente[strcspn (mundo[i].continente, "\n")] = '\0';
+        mundo[i].cor[strcspn(mundo[i].cor, "\n")] = '\n';
 
-    scanf("%d", &opcao);
-    limparBufferEntrada();
-
-    switch (opcao){
-
-
-        case 1: //cadastro de novos continente
-    
-        if(totalContinente < 4){
-
-        printf("Qual o seu continente? \n");
-        fgets (mundo[totalContinente].continente, tam_max, stdin);
-    
-        printf("Qual a cor dele?\n");
-        fgets(mundo[totalContinente].cor, tam_max, stdin);
-
-        mundo[totalContinente].continente[strcspn(mundo[totalContinente].continente, "\n")] = '\0';
-        mundo[totalContinente].cor[strcspn(mundo[totalContinente].cor, "\n")] = '\0';
-
-        printf("Quantas tropas ele possui?\n");
-        scanf("%d", &mundo[totalContinente].tropa);
+        printf("Quantas tropas?\n");
+        scanf("%d", &mundo[i].tropa);
         limparBufferEntrada();
+        
+    }
 
-        printf("Cadastro realizado com sucesso!\n");
-
-        totalContinente++;
-    
-}       else{
-   
-        printf("Foi atingido o total de territorios cadastrados");
-
-}
-    
-    printf("Pressione enter para prosseguir...\n");
-    getchar();
-    break;
-
-        case 2: //mostra os territorios
-    
-        for(int c = 0; c < totalContinente; c++){
-            printf("====================\n");
-            printf("território %d: %s\n", c + 1, mundo[c].continente);
-            printf("cor: %s\n", mundo[c].cor);
-            printf("tropa: %d\n", mundo[c].tropa);
-
+    if(i != 0){
+        
+        for(int j = 0; j <= i; j++){
+            printf("Continente %d", j + 1);
+            printf("Nome: %s", mundo[j].continente);
+            printf("Cor: %s", mundo[j].cor);
+            printf("Tropa: %d", mundo[j].tropa);
         }
+    }
+
+
+
+
+
+
 
 }
-    }while(opcao != 0);
 
         
-    return 0;
-}
+   
 
 // --- Implementação das Funções ---
 
