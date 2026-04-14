@@ -1,31 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-        
+#include <time.h>
+
 // ============================================================================
 //constante global
-#define tam_max 50 //tamanho máximo das strings
-#define mundo_max 5 //quantidade máxima de territórios
+#define TAM_STRING 50 //tamanho máximo das strings
+#define MUNDO_MAX 20 //tamanho máximo da quantidade de territórios
 
 struct territorio{
-    char continente[tam_max];
-    char cor[tam_max];
+    char continente[TAM_STRING];
+    char cor[TAM_STRING];
     int tropa;
 };  
 
+
+//Limpar os buffer de entrada
 void limparBufferEntrada(){
-    
     int c;
     while((c = getchar()) != '\n' && c != EOF);
+}
 
+//função de ataque
+void attack(){
+    int attack;
+    attack = rand()%4 + 1;
 }
 
 int main(){
 
-    struct territorio mundo[mundo_max];
+    struct territorio *mundo;
     int totalContinente = 0;
     int i = 3;
     int k = 1;
+
+    //Alocação dinâmica de memória
+    mundo = (struct territorio *) calloc (MUNDO_MAX, sizeof(struct territorio));
     
     printf("==============================\n\n" );
     printf("Vamos cadastrar os 5 territórios iniciais do nosso mundo!\n\n");
@@ -37,10 +47,10 @@ int main(){
         printf("--- Cadastrando o território %d\n", i + 1);
 
         printf("Qual o nome? ");
-        fgets(mundo[i].continente, tam_max, stdin);
+        fgets(mundo[i].continente, TAM_STRING, stdin);
         
         printf("Qual a cor? ");
-        fgets(mundo[i].cor, tam_max, stdin);
+        fgets(mundo[i].cor, TAM_STRING, stdin);
 
         mundo[i].continente[strcspn (mundo[i].continente, "\n")] = '\0';
         mundo[i].cor[strcspn(mundo[i].cor, "\n")] = '\0';
